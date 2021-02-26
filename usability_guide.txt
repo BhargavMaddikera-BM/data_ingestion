@@ -12,7 +12,7 @@ The following are required before the Application is launched:
 	- github_events_topic=github_events_topic
 	- github_events_url=https://api.github.com/events?per_page=
 In the event app_config.properties is not there, they would default to github_events_topic and https://api.github.com/events?per_page= for topic and url respectively.
-6)Install Maven.Goto the code data_ingestion run mvn clean install
+6)Install Maven.Goto the code data_ingestion run mvn clean install to generate target classes to launch the application
 
 
 How to Launch the Application:
