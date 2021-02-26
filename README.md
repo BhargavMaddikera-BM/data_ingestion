@@ -21,5 +21,3 @@ Once you take the code from GIT - https://github.com/BhargavMaddikera-BM/data_in
 
 1) goto /app-web/target
 2) execute java -jar app-web-0.0.1-SNAPSHOT.jar com.teikametrics.AppWebApplication
-
-
