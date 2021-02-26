@@ -1,0 +1,422 @@
+This is an Usability Guide of how to use the Data Ingestion System
+
+Prerequisites:
+
+The following are required before the Application is launched:
+
+1)Java 8(minimum)
+2)Install Apache Zookeeper 3.6.2 and launch the same - /zookeeper/apache-zookeeper-3.6.2/bin execute zkServer
+3)Install Apache Kafka 2.7 and launch the same - ./bin/windows/kafka-server-start.bat ./config/server.properties
+4)Create Folder /data_ingestion/logs for logging(Log4j is used), though it will get automatically created, good to create them manually before hand
+5)Create app_config.properties in /data_ingestion/config and set the following:
+	- github_events_topic=github_events_topic
+	- github_events_url=https://api.github.com/events?per_page=
+In the event app_config.properties is not there, they would default to github_events_topic and https://api.github.com/events?per_page= for topic and url respectively.
+6)Install Maven.Goto the code data_ingestion and run mvn clean install -DskipTests to generate target classes to launch the application
+
+
+How to Launch the Application:
+
+Once you take the code from GIT,
+
+1) goto /app-web/target
+2) execute java -jar app-web-0.0.1-SNAPSHOT.jar com.teikametrics.AppWebApplication
+
+URL: http://localhost:8085/data_ingestion/github/events/v1/pull/{number of events to pull}
+Description: This is an API that basically pulls the number of events(based on the number of events to pull in the Path Param) from https://api.github.com/events?per_page=  
+Method:GET
+Example: http://localhost:8085/data_ingestion/github/events/v1/pull/3
+Request:None
+Response:
+
+{
+    "responseCode": "S-10000",
+    "responseDescription": "GitHub Events Fetched Successfully",
+    "responseMessage": "GitHub Events Fetched Successfully",
+    "responseStatus": "Success",
+    "data": [
+        {
+            "id": "15327629971",
+            "type": "PushEvent",
+            "actor": {
+                "id": 33379584,
+                "login": "alexyao2015",
+                "display_login": "alexyao2015",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/alexyao2015",
+                "avatar_url": "https://avatars.githubusercontent.com/u/33379584?"
+            },
+            "repo": {
+                "id": 239449794,
+                "name": "hass-emulated-hue/core",
+                "url": "https://api.github.com/repos/hass-emulated-hue/core"
+            },
+            "payload": {
+                "ref": "refs/heads/fix/harmony",
+                "ref_type": null,
+                "master_branch": null,
+                "description": null,
+                "pusher_type": null
+            },
+            "created_at": "2021-02-26T06:32:23Z"
+        },
+        {
+            "id": "15327629960",
+            "type": "PushEvent",
+            "actor": {
+                "id": 41898282,
+                "login": "github-actions[bot]",
+                "display_login": "github-actions",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/github-actions[bot]",
+                "avatar_url": "https://avatars.githubusercontent.com/u/41898282?"
+            },
+            "repo": {
+                "id": 293221417,
+                "name": "huoshenlaile/AutoApiSecret",
+                "url": "https://api.github.com/repos/huoshenlaile/AutoApiSecret"
+            },
+            "payload": {
+                "ref": "refs/heads/main",
+                "ref_type": null,
+                "master_branch": null,
+                "description": null,
+                "pusher_type": null
+            },
+            "created_at": "2021-02-26T06:32:23Z"
+        },
+        {
+            "id": "15327629966",
+            "type": "PublicEvent",
+            "actor": {
+                "id": 65746072,
+                "login": "DWTwilight",
+                "display_login": "DWTwilight",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/DWTwilight",
+                "avatar_url": "https://avatars.githubusercontent.com/u/65746072?"
+            },
+            "repo": {
+                "id": 315024888,
+                "name": "DWTwilight/QT_CADTest",
+                "url": "https://api.github.com/repos/DWTwilight/QT_CADTest"
+            },
+            "payload": {
+                "ref": null,
+                "ref_type": null,
+                "master_branch": null,
+                "description": null,
+                "pusher_type": null
+            },
+            "created_at": "2021-02-26T06:32:23Z"
+        }
+    ]
+}
+
+
+URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/publish/events/{number of events to publish}
+Description: This is an API that basically pulls the number of events(based on the number of events to publish in the Path Param) from https://api.github.com/events?per_page= and publishes to the Kafka System. It is immediately consumed by the Consumer.
+Method:GET
+Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/publish/events/3
+Request:None
+Response:
+{
+    "responseCode": "S-10001",
+    "responseDescription": "Events Published Successfully",
+    "responseMessage": "Events Published Successfully",
+    "responseStatus": "Success",
+    "data": [
+        {
+            "id": "15327638942",
+            "type": "IssueCommentEvent",
+            "actor": {
+                "id": 35613825,
+                "login": "vercel[bot]",
+                "display_login": "vercel",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/vercel[bot]",
+                "avatar_url": "https://avatars.githubusercontent.com/u/35613825?"
+            },
+            "repo": {
+                "id": 302867959,
+                "name": "erfanhabibipanah/Resume-Next.js",
+                "url": "https://api.github.com/repos/erfanhabibipanah/Resume-Next.js"
+            },
+            "payload": {
+                "ref": null,
+                "ref_type": null,
+                "master_branch": null,
+                "description": null,
+                "pusher_type": null
+            },
+            "created_at": "2021-02-26T06:33:31Z"
+        },
+        {
+            "id": "15327638937",
+            "type": "PushEvent",
+            "actor": {
+                "id": 8517910,
+                "login": "LombiqBot",
+                "display_login": "LombiqBot",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/LombiqBot",
+                "avatar_url": "https://avatars.githubusercontent.com/u/8517910?"
+            },
+            "repo": {
+                "id": 264168728,
+                "name": "Lombiq/OrchardCMS.Poll",
+                "url": "https://api.github.com/repos/Lombiq/OrchardCMS.Poll"
+            },
+            "payload": {
+                "ref": "refs/heads/issue/EETT-12",
+                "ref_type": null,
+                "master_branch": null,
+                "description": null,
+                "pusher_type": null
+            },
+            "created_at": "2021-02-26T06:33:31Z"
+        },
+        {
+            "id": "15327638935",
+            "type": "CreateEvent",
+            "actor": {
+                "id": 75841818,
+                "login": "shalini-devgit",
+                "display_login": "shalini-devgit",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/shalini-devgit",
+                "avatar_url": "https://avatars.githubusercontent.com/u/75841818?"
+            },
+            "repo": {
+                "id": 342485023,
+                "name": "shalini-devgit/Shalini-Blue83",
+                "url": "https://api.github.com/repos/shalini-devgit/Shalini-Blue83"
+            },
+            "payload": {
+                "ref": "main",
+                "ref_type": "branch",
+                "master_branch": "main",
+                "description": "Blue Testing83",
+                "pusher_type": "user"
+            },
+            "created_at": "2021-02-26T06:33:31Z"
+        }
+    ]
+}
+
+
+URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events
+Description: This is an API that basically fetches all the events that were published from start
+Method:GET
+Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events
+Request:None
+Response:
+
+{
+    "responseCode": "S-10000",
+    "responseDescription": "GitHub Events Fetched Successfully",
+    "responseMessage": "GitHub Events Fetched Successfully",
+    "responseStatus": "Success",
+	"data": {
+        "200": {
+            "id": "15327638942",
+            "type": "IssueCommentEvent",
+            "actor": {
+                "id": 35613825,
+                "login": "vercel[bot]",
+                "display_login": "vercel",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/vercel[bot]",
+                "avatar_url": "https://avatars.githubusercontent.com/u/35613825?"
+            },
+            "repo": {
+                "id": 302867959,
+                "name": "erfanhabibipanah/Resume-Next.js",
+                "url": "https://api.github.com/repos/erfanhabibipanah/Resume-Next.js"
+            },
+            "payload": {
+                "ref": null,
+                "ref_type": null,
+                "master_branch": null,
+                "description": null,
+                "pusher_type": null
+            },
+            "created_at": "2021-02-26T06:33:31Z"
+        },
+        "201": {
+            "id": "15327638937",
+            "type": "PushEvent",
+            "actor": {
+                "id": 8517910,
+                "login": "LombiqBot",
+                "display_login": "LombiqBot",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/LombiqBot",
+                "avatar_url": "https://avatars.githubusercontent.com/u/8517910?"
+            },
+            "repo": {
+                "id": 264168728,
+                "name": "Lombiq/OrchardCMS.Poll",
+                "url": "https://api.github.com/repos/Lombiq/OrchardCMS.Poll"
+            },
+            "payload": {
+                "ref": "refs/heads/issue/EETT-12",
+                "ref_type": null,
+                "master_branch": null,
+                "description": null,
+                "pusher_type": null
+            },
+            "created_at": "2021-02-26T06:33:31Z"
+        },
+        "202": {
+            "id": "15327638935",
+            "type": "CreateEvent",
+            "actor": {
+                "id": 75841818,
+                "login": "shalini-devgit",
+                "display_login": "shalini-devgit",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/shalini-devgit",
+                "avatar_url": "https://avatars.githubusercontent.com/u/75841818?"
+            },
+            "repo": {
+                "id": 342485023,
+                "name": "shalini-devgit/Shalini-Blue83",
+                "url": "https://api.github.com/repos/shalini-devgit/Shalini-Blue83"
+            },
+            "payload": {
+                "ref": "main",
+                "ref_type": "branch",
+                "master_branch": "main",
+                "description": "Blue Testing83",
+                "pusher_type": "user"
+            },
+            "created_at": "2021-02-26T06:33:31Z"
+        }
+    }
+}
+
+
+URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/{start position}/{end position}
+Description: This is an API that basically fetches all the events that were published from start but a range is provided based on start position and end position available in Path Param.
+Method:GET
+Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/0/3
+Request:None
+Response:
+
+{
+    "responseCode": "S-10000",
+    "responseDescription": "GitHub Events Fetched Successfully",
+    "responseMessage": "GitHub Events Fetched Successfully",
+    "responseStatus": "Success",
+	"data": {
+        "200": {
+            "id": "15327638942",
+            "type": "IssueCommentEvent",
+            "actor": {
+                "id": 35613825,
+                "login": "vercel[bot]",
+                "display_login": "vercel",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/vercel[bot]",
+                "avatar_url": "https://avatars.githubusercontent.com/u/35613825?"
+            },
+            "repo": {
+                "id": 302867959,
+                "name": "erfanhabibipanah/Resume-Next.js",
+                "url": "https://api.github.com/repos/erfanhabibipanah/Resume-Next.js"
+            },
+            "payload": {
+                "ref": null,
+                "ref_type": null,
+                "master_branch": null,
+                "description": null,
+                "pusher_type": null
+            },
+            "created_at": "2021-02-26T06:33:31Z"
+        },
+        "201": {
+            "id": "15327638937",
+            "type": "PushEvent",
+            "actor": {
+                "id": 8517910,
+                "login": "LombiqBot",
+                "display_login": "LombiqBot",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/LombiqBot",
+                "avatar_url": "https://avatars.githubusercontent.com/u/8517910?"
+            },
+            "repo": {
+                "id": 264168728,
+                "name": "Lombiq/OrchardCMS.Poll",
+                "url": "https://api.github.com/repos/Lombiq/OrchardCMS.Poll"
+            },
+            "payload": {
+                "ref": "refs/heads/issue/EETT-12",
+                "ref_type": null,
+                "master_branch": null,
+                "description": null,
+                "pusher_type": null
+            },
+            "created_at": "2021-02-26T06:33:31Z"
+        },
+        "202": {
+            "id": "15327638935",
+            "type": "CreateEvent",
+            "actor": {
+                "id": 75841818,
+                "login": "shalini-devgit",
+                "display_login": "shalini-devgit",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/shalini-devgit",
+                "avatar_url": "https://avatars.githubusercontent.com/u/75841818?"
+            },
+            "repo": {
+                "id": 342485023,
+                "name": "shalini-devgit/Shalini-Blue83",
+                "url": "https://api.github.com/repos/shalini-devgit/Shalini-Blue83"
+            },
+            "payload": {
+                "ref": "main",
+                "ref_type": "branch",
+                "master_branch": "main",
+                "description": "Blue Testing83",
+                "pusher_type": "user"
+            },
+            "created_at": "2021-02-26T06:33:31Z"
+        }
+    }
+}
+
+
+URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/{start position}/{end position}
+Description: This is a negative scenario when start position is greater than the Total Events Consumed
+Method:GET
+Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/20/30
+Request:None
+Response:
+
+{
+    "responseCode": "E-10000",
+    "responseDescription": "Error during GitHub Events Fetch",
+    "responseMessage": "Total Events is less than Start Position",
+    "responseStatus": "Failure",
+    "data": null
+}
+
+
+
+URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/{start position}/{end position}
+Description: This is a negative scenario when Total Events Consumed is less than end position
+Method:GET
+Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/20/30
+Request:None
+Response:
+
+{
+    "responseCode": "E-10000",
+    "responseDescription": "Error during GitHub Events Fetch",
+    "responseMessage": "Total Events is less than End Position",
+    "responseStatus": "Failure",
+    "data": null
+}
