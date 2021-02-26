@@ -1,7 +1,7 @@
 Key Points and Best Practices:
 
 1)Followed J2EE Architecture Pattern with layers of web, service, dao, vo, utlity and externa integration modules
-2)Spring Boot
+2)Spring Boot and Spring
 3)used javax.ws.rs for making a call to https://api.github.com/events
 4)Apache Kafka 2.7 with Zookeeper
    Topic name is github_events_topic
