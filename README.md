@@ -8,10 +8,10 @@ The following are required before the Application is launched:
 2)Install Apache Zookeeper 3.6.2 and launch the same - /zookeeper/apache-zookeeper-3.6.2/bin execute zkServer. Also set ZOOKEEPER_HOME variable in Environment Settings of the OS
 3)Install Apache Kafka 2.7 and launch the same - ./bin/windows/kafka-server-start.bat ./config/server.properties
 4)Create Folder /data_ingestion/logs for logging(Log4j is used), though it will get automatically created, good to create them manually before hand
-5)Create app_config.properties in /data_ingestion/config and set the following:
+5)Create app_config.properties in /data_ingestion/config folder and set the following properties
 	- github_events_topic=github_events_topic
 	- github_events_url=https://api.github.com/events?per_page=
-In the event app_config.properties is not there, they would default to github_events_topic and https://api.github.com/events?per_page= for topic and url respectively.
+In the event app_config.properties is not there, they would default to github_events_topic and https://api.github.com/events?per_page= for github_events_topic and github_events_url respectively.
 6)Install Maven 3.6.3
 
 Steps to Launch the Application:
