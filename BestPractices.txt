@@ -1,17 +1,28 @@
 Key Points and Best Practices:
 
-1)Followed J2EE Architecture Pattern with layers of web, service, dao, vo, utlity and external integration modules
-2)Spring Boot and Spring
-3)used javax.ws.rs for making a call to https://api.github.com/events
-4)Apache Kafka 2.7 with Zookeeper
+Architecture Patterns:
+
+1) J2EE Architecture Pattern with layers of web, service, dao, vo, utlity and external integration modules
+2) Service Oriented Architecture - REST
+3) Service Oriented Architecture - Web Services
+4) Data Streaming Pattern including Publish Subscribe Pattern
+5) Pipe and Filter Pattern
+6) Client Server Pattern
+7) Peer to Peer Pattern
+
+Others:
+
+1)Spring Boot and Spring
+2)used javax.ws.rs for making a call to https://api.github.com/events
+3)Apache Kafka 2.7 with Zookeeper
    Topic name is github_events_topic
    Producer
    Consumer
    Custom Serializer and Custom DeSerializer
-5)Reading from external properties file wherever possible w.r.t configuration parameters/properties
-6)Application can be launched via java -jar app-web-0.0.1-SNAPSHOT.jar com.teikametrics.AppWebApplication from command prompt
-7)For Caching, used a simple static variable. would have used Hazelcast In Memory Datagrid if implemented in real
-8)Used Log4j for logging 
-9)Used Custom Defined Exception Entities(Checked and Runtime)
+4)Reading from external properties file wherever possible w.r.t configuration parameters/properties
+5)Application can be launched via java -jar app-web-0.0.1-SNAPSHOT.jar com.teikametrics.AppWebApplication from command prompt
+6)For Caching, used a simple static variable. would have used Hazelcast In Memory Datagrid if implemented in real
+7)Used Log4j for logging 
+8)Used Custom Defined Exception Entities(Checked and Runtime)
 
 
