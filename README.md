@@ -12,12 +12,11 @@ The following are required before the Application is launched:
 	- github_events_topic=github_events_topic
 	- github_events_url=https://api.github.com/events?per_page=
 In the event app_config.properties is not there, they would default to github_events_topic and https://api.github.com/events?per_page= for topic and url respectively.
-6)Install Maven.Goto the code data_ingestion and run mvn clean install -DskipTests to generate target classes to launch the application
+6)Install Maven 3.6.3
 
+Steps to Launch the Application:
 
-How to Launch the Application:
-
-Once you take the code from GIT - https://github.com/BhargavMaddikera-BM/data_ingestion.git master branch:
-
-1) goto /app-web/target
-2) execute java -jar app-web-0.0.1-SNAPSHOT.jar com.teikametrics.AppWebApplication
+1) Take the code from GIT - https://github.com/BhargavMaddikera-BM/data_ingestion.git master branch
+2) Go to data_ingestion folder and run mvn clean install -DskipTests to generate target classes to launch the application
+3) Go to /app-web/target
+4) execute java -jar app-web-0.0.1-SNAPSHOT.jar com.teikametrics.AppWebApplication
