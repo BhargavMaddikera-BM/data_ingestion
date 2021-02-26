@@ -22,8 +22,9 @@ Once you take the code from GIT,
 1) goto /app-web/target
 2) execute java -jar app-web-0.0.1-SNAPSHOT.jar com.teikametrics.AppWebApplication
 
+
+Description: An API that pulls the number of events(based on the number of events to pull in the Path Param) from https://api.github.com/events?per_page=  
 URL: http://localhost:8085/data_ingestion/github/events/v1/pull/{number of events to pull}
-Description: This is an API that basically pulls the number of events(based on the number of events to pull in the Path Param) from https://api.github.com/events?per_page=  
 Method:GET
 Example: http://localhost:8085/data_ingestion/github/events/v1/pull/3
 Request:None
@@ -113,9 +114,8 @@ Response:
     ]
 }
 
-
+Description: An API that pulls the number of events(based on the number of events to publish in the Path Param) from https://api.github.com/events?per_page= and publishes to the Kafka System. It is immediately consumed by the Consumer.
 URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/publish/events/{number of events to publish}
-Description: This is an API that basically pulls the number of events(based on the number of events to publish in the Path Param) from https://api.github.com/events?per_page= and publishes to the Kafka System. It is immediately consumed by the Consumer.
 Method:GET
 Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/publish/events/3
 Request:None
@@ -205,8 +205,8 @@ Response:
 }
 
 
+Description: An API that fetches all the events that were published from start
 URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events
-Description: This is an API that basically fetches all the events that were published from start
 Method:GET
 Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events
 Request:None
@@ -297,8 +297,8 @@ Response:
 }
 
 
+Description: An API that fetches all the events that were published from start but a range is provided based on start position and end position available in Path Param.
 URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/{start position}/{end position}
-Description: This is an API that basically fetches all the events that were published from start but a range is provided based on start position and end position available in Path Param.
 Method:GET
 Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/0/3
 Request:None
@@ -389,8 +389,8 @@ Response:
 }
 
 
+Description: A Negative Scenario when start position is greater than the Total Events Consumed
 URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/{start position}/{end position}
-Description: This is a negative scenario when start position is greater than the Total Events Consumed
 Method:GET
 Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/20/30
 Request:None
@@ -406,8 +406,8 @@ Response:
 
 
 
+Description: A Negative Scenario when Total Events Consumed is less than end position
 URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/{start position}/{end position}
-Description: This is a negative scenario when Total Events Consumed is less than end position
 Method:GET
 Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/20/30
 Request:None
