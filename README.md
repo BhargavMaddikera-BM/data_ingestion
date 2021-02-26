@@ -14,6 +14,8 @@ The following are required before the Application is launched:
 In the event app_config.properties is not there, they would default to github_events_topic and https://api.github.com/events?per_page= for github_events_topic and github_events_url respectively.
 6)Install Maven 3.6.3
 
+
+
 Steps to Launch the Application:
 
 1) Take the code from GIT - https://github.com/BhargavMaddikera-BM/data_ingestion.git master branch
