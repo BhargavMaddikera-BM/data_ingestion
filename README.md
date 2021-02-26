@@ -5,7 +5,7 @@ Prerequisites:
 The following are required before the Application is launched:
 
 1)Java 8(minimum)
-2)Install Apache Zookeeper 3.6.2 and launch the same - /zookeeper/apache-zookeeper-3.6.2/bin execute zkServer
+2)Install Apache Zookeeper 3.6.2 and launch the same - /zookeeper/apache-zookeeper-3.6.2/bin execute zkServer. Also set ZOOKEEPER_HOME variable in Environment Settings of the OS
 3)Install Apache Kafka 2.7 and launch the same - ./bin/windows/kafka-server-start.bat ./config/server.properties
 4)Create Folder /data_ingestion/logs for logging(Log4j is used), though it will get automatically created, good to create them manually before hand
 5)Create app_config.properties in /data_ingestion/config and set the following:
