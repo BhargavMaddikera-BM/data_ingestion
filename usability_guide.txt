@@ -4,14 +4,15 @@ Prerequisites:
 
 The following are required before the Application is launched:
 
-Java 8(minimum)
-Install Apache Zookeeper 3.6.2 and launch the same
-Install Apache Kafka 2.7 and launch the same
-Create Folder /data_ingestion/logs for logging(Log4j is used), though it will get automatically created, good to create them manually before hand
-Create app_config.properties in /data_ingestion/config and set the following:
+1)Java 8(minimum)
+2)Install Apache Zookeeper 3.6.2 and launch the same
+3)Install Apache Kafka 2.7 and launch the same
+4)Create Folder /data_ingestion/logs for logging(Log4j is used), though it will get automatically created, good to create them manually before hand
+5)Create app_config.properties in /data_ingestion/config and set the following:
 	- github_events_topic=github_events_topic
 	- github_events_url=https://api.github.com/events?per_page=
 In the event app_config.properties is not there, they would default to github_events_topic and https://api.github.com/events?per_page= for topic and url respectively.
+6)Install Maven.Goto the code data_ingestion run mvn clean install
 
 
 How to Launch the Application:
