@@ -1,6 +1,7 @@
 package com.teikametrics.controller.externalintegration;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -107,6 +108,7 @@ public class EcommerceAndAdvertisingController extends BaseController {
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/v1/events/commit/common_hour", method = RequestMethod.GET)
 	public ResponseEntity<BaseResponse> fetchCommitedEventsByCommonHourOfDay(HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse) {
@@ -114,12 +116,23 @@ public class EcommerceAndAdvertisingController extends BaseController {
 		BaseResponse response = new EcommerceAndAdvertisingCommonHourResponse();
 		try {
 			Map<String,Integer> data=ecommerceAndAdvertisingService.fetchCommitedEventsByCommonHourOfDay();
-			Map.Entry<String,Integer> entry = data.entrySet().iterator().next();
 			List<EcommerceAndAdvertisingCommonHourVo>finalData=new ArrayList<EcommerceAndAdvertisingCommonHourVo>();
-			EcommerceAndAdvertisingCommonHourVo ecommerceAndAdvertisingCommonHourVo=new EcommerceAndAdvertisingCommonHourVo();
-			ecommerceAndAdvertisingCommonHourVo.setHour(entry.getKey());
-			ecommerceAndAdvertisingCommonHourVo.setNumberOfCommit(entry.getValue());
-			finalData.add(ecommerceAndAdvertisingCommonHourVo);
+			int i=0;
+			int value=0;
+			Iterator it=data.entrySet().iterator();
+			while(it.hasNext()){
+				Map.Entry<String,Integer> entry=(Map.Entry<String,Integer>)it.next();
+				if(i==0 || entry.getValue()==value){
+					EcommerceAndAdvertisingCommonHourVo ecommerceAndAdvertisingCommonHourVo=new EcommerceAndAdvertisingCommonHourVo();
+					ecommerceAndAdvertisingCommonHourVo.setHour(entry.getKey());
+					ecommerceAndAdvertisingCommonHourVo.setNumberOfCommit(entry.getValue());
+					if(i==0){
+						value=ecommerceAndAdvertisingCommonHourVo.getNumberOfCommit();
+					}
+					finalData.add(ecommerceAndAdvertisingCommonHourVo);
+				}
+				++i;
+			}			
 			((EcommerceAndAdvertisingCommonHourResponse) response).setData(finalData);
 			response = constructResponse(response, Constants.SUCCESS, Constants.SUCCESS_GIT_HUB_EVENTS_FETCH,
 					Constants.SUCCESS_GIT_HUB_EVENTS_FETCH, Constants.SUCCESS_DURING_GET);
