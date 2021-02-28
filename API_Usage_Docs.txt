@@ -395,3 +395,25 @@ Response:
     "responseStatus": "Failure",
     "data": null
 }
+
+
+
+Description: An API that fetches all Events that has got committed at the most common hour of day. Date Pattern Used is: dd-mm-yyyy-hour. TimeZone is the zone in which the Server is running
+URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/commit/common_hour
+Method:GET
+Example:http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/commit/common_hour
+Request:None
+Response:
+
+{
+    "responseCode": "S-10000",
+    "responseDescription": "GitHub Events Fetched Successfully",
+    "responseMessage": "GitHub Events Fetched Successfully",
+    "responseStatus": "Success",
+    "data": [
+        {
+            "hour": "28-2-2021-17:00",
+            "numberOfCommit": 3
+        }
+    ]
+}

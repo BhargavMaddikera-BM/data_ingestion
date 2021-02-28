@@ -1,5 +1,7 @@
 package com.teikametrics.cache;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +28,39 @@ public class GitHubCacheImpl{
 	}
 	
 	private Map<String,GitHubVo> gitHubEventMap=new ConcurrentHashMap<String,GitHubVo>();	
-
+	private Map<String,List<String>> commonHourOfDayMap=new ConcurrentHashMap<String,List<String>>();
 
 	public void addGitHubEvent(String id, GitHubVo data )throws ApplicationException{
+		String currentHour=getCurrentHour();
+		if(commonHourOfDayMap.containsKey(currentHour)){
+			List<String>offSetIdList=commonHourOfDayMap.get(currentHour);
+			offSetIdList.add(id);
+			
+		}else{
+			List<String>offSetIdList=new ArrayList<String>();
+			offSetIdList.add(id);
+			commonHourOfDayMap.put(currentHour, offSetIdList);
+		}
 		gitHubEventMap.put(id, data);
+	}
+
+	@SuppressWarnings("deprecation")
+	private String getCurrentHour() {
+		// TODO Auto-generated method stub
+		Date date=new Date(System.currentTimeMillis());
+		int month=date.getMonth()+1;
+		int day=date.getDate();
+		int year=date.getYear()+1900;
+		int hours=date.getHours();
+		String finalDate=""+day+"-"+month+"-"+year+"-"+hours+":00";
+		return finalDate;		
+	}
+
+
+	
+	
+	public Map<String, List<String>> getCommonHourOfDayMap() {
+		return commonHourOfDayMap;
 	}
 
 	public void addGitHubEvents(List<GitHubVo> data )throws ApplicationException{
