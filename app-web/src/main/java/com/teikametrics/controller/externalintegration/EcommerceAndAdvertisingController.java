@@ -30,7 +30,6 @@ import com.teikametrics.response.externalintegration.EcommerceAndAdvertisingPubl
 
 @RestController
 @CrossOrigin
-// This will be part of Settings and Preferences. Hence sp.
 @RequestMapping("/data_ingestion/ecommerce_advertising")
 public class EcommerceAndAdvertisingController extends BaseController {
 
