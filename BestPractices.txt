@@ -10,19 +10,26 @@ Architecture Patterns:
 6) Client Server Pattern
 7) Peer to Peer Pattern
 
+Key Technologies/Libraries/Frameworks:
+
+1) Java 8
+2) Apache Kafka 2.7
+3) Spring Boot 2.2
+4) javax.ws.rs
+5) Apache Zookeeper 3.6.2
+
 Others:
 
-1) Spring Boot and Spring
-2) used javax.ws.rs for making a call to https://api.github.com/events
-3) Apache Kafka 2.7 with Zookeeper
+1) used javax.ws.rs for making a call to https://api.github.com/events
+2) Apache Kafka with Zookeeper
    Topic name is github_events_topic
    Producer
    Consumer
    Custom Serializer and Custom DeSerializer
-4) Reading from external properties file wherever possible w.r.t configuration parameters/properties
-5) Application can be launched via java -jar app-web-0.0.1-SNAPSHOT.jar com.teikametrics.AppWebApplication from command prompt
-6) For Caching, used a simple static variable. would have used Hazelcast In Memory Datagrid if implemented in real
-7) Used Log4j for logging 
-8) Used Custom Defined Exception Entities(Checked and Runtime)
+3) Reading from external properties file wherever possible w.r.t configuration parameters/properties
+4) Application can be launched via java -jar app-web-0.0.1-SNAPSHOT.jar com.teikametrics.AppWebApplication from command prompt
+5) For Caching, used a simple static variable. would have used Hazelcast In Memory Datagrid if implemented in real
+6) Used Log4j for logging 
+7) Used Custom Defined Exception Entities(Checked and Runtime)
 
 
