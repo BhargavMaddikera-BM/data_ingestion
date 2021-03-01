@@ -1,4 +1,4 @@
-package com.teikametrics.controller.externalintegration;
+package com.teikametrics.controller;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.teikametrics.common.BaseController;
 import com.teikametrics.common.BaseResponse;
 import com.teikametrics.common.Constants;
-import com.teikametrics.externalintegration.github.GitHubVo;
 import com.teikametrics.github.GitHubEvents;
-import com.teikametrics.response.externalintegration.GitHubEventsResponse;
+import com.teikametrics.github.GitHubVo;
+import com.teikametrics.response.github.GitHubEventsResponse;
 
 @RestController
 @CrossOrigin

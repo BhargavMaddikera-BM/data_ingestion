@@ -1,4 +1,4 @@
-package com.teikametrics.externalintegration;
+package com.teikametrics.util;
 
 import java.time.Duration;
 
@@ -9,8 +9,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import com.teikametrics.ApplicationException;
 import com.teikametrics.ApplicationRuntimeException;
 import com.teikametrics.cache.GitHubCacheImpl;
-import com.teikametrics.externalintegration.github.GitHubVo;
-import com.teikametrics.kafka.common.KafkaConfig;
+import com.teikametrics.github.GitHubVo;
+import com.teikametrics.kafka.KafkaConfig;
 
 
 public class GitHubEventSubscriberThread extends Thread{	

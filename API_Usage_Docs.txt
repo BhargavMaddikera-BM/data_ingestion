@@ -90,9 +90,9 @@ Response:
 }
 
 Description: An API that pulls the number of events(based on the number of events to publish in the Path Param) from https://api.github.com/events?per_page= and publishes to the Kafka System. It is immediately consumed by the Consumer.
-URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/publish/events/{number of events to publish}
+URL: http://localhost:8085/data_ingestion/events/v1/publish/{number of events to publish}
 Method:GET
-Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/publish/events/3
+Example: http://localhost:8085/data_ingestion/events/v1/publish/20
 Request:None
 Response:
 {
@@ -181,9 +181,9 @@ Response:
 
 
 Description: An API that fetches all the events that were published from start
-URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events
+URL: http://localhost:8085/data_ingestion/events/v1
 Method:GET
-Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events
+Example: http://localhost:8085/data_ingestion/events/v1
 Request:None
 Response:
 
@@ -273,9 +273,9 @@ Response:
 
 
 Description: An API that fetches all the events that were published from start but a range is provided based on start position and end position available in Path Param.
-URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/{start position}/{end position}
+URL: http://localhost:8085/data_ingestion/events/v1/{start position}/{end position}
 Method:GET
-Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/0/3
+Example: http://localhost:8085/data_ingestion/events/v1/1/4
 Request:None
 Response:
 
@@ -365,9 +365,9 @@ Response:
 
 
 Description: A Negative Scenario when start position is greater than the Total Events Consumed
-URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/{start position}/{end position}
+URL: http://localhost:8085/data_ingestion/events/v1/{start position}/{end position}
 Method:GET
-Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/20/30
+Example: http://localhost:8085/data_ingestion/events/v1/20/40
 Request:None
 Response:
 
@@ -382,9 +382,9 @@ Response:
 
 
 Description: A Negative Scenario when Total Events Consumed is less than end position
-URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/{start position}/{end position}
+URL: http://localhost:8085/data_ingestion/events/v1/{start position}/{end position}
 Method:GET
-Example: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/20/30
+Example: http://localhost:8085/data_ingestion/events/v1/1/40
 Request:None
 Response:
 
@@ -399,9 +399,9 @@ Response:
 
 
 Description: An API that fetches all Events that has got committed at the most common hour of day. Date Pattern Used is: dd-mm-yyyy-hour. TimeZone is the zone in which the Server is running
-URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/commit/common_hour
+URL: http://localhost:8085/data_ingestion/events/v1/commit/common_hour
 Method:GET
-Example:http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/commit/common_hour
+Example:http://localhost:8085/data_ingestion/events/v1/commit/common_hour
 Request:None
 Response:
 
@@ -420,9 +420,9 @@ Response:
 
 
 Description: An API that fetches 5 most commonly used words in the commit messages. Its returns the number of occurences as well.
-URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/commit/common_word
+URL:http://localhost:8085/data_ingestion/events/v1/commit/common_word
 Method:GET
-Example:http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/commit/common_word
+Example:http://localhost:8085/data_ingestion/events/v1/commit/common_word
 Request:None
 Response:
 

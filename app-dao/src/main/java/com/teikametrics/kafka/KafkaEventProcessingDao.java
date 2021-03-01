@@ -1,4 +1,4 @@
-package com.teikametrics.kafka.externalintegration;
+package com.teikametrics.kafka;
 
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -6,12 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import com.teikametrics.ApplicationException;
 import com.teikametrics.common.BaseDao;
-import com.teikametrics.externalintegration.github.GitHubVo;
-import com.teikametrics.kafka.common.KafkaConfig;
+import com.teikametrics.github.GitHubVo;
 
 
 @Repository
-public class EcommerceAndAdvertisingDao extends BaseDao {
+public class KafkaEventProcessingDao extends BaseDao {
 
 	
 	public void publish(GitHubVo data)throws ApplicationException{

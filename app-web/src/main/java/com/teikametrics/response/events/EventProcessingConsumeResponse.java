@@ -1,11 +1,11 @@
-package com.teikametrics.response.externalintegration;
+package com.teikametrics.response.events;
 
 import java.util.Map;
 
 import com.teikametrics.common.BaseResponse;
-import com.teikametrics.externalintegration.github.GitHubVo;
+import com.teikametrics.github.GitHubVo;
 
-public class EcommerceAndAdvertisingConsumeResponse extends BaseResponse{
+public class EventProcessingConsumeResponse extends BaseResponse{
 	
 	private Map<String,GitHubVo> data;
 

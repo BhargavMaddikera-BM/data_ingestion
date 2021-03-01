@@ -1,10 +1,10 @@
-package com.teikametrics.response.externalintegration;
+package com.teikametrics.response.events;
 
 import java.util.Map;
 
 import com.teikametrics.common.BaseResponse;
 
-public class EcommerceAndAdvertisingCommonWordsInCommitResponse extends BaseResponse{
+public class EventProcessingCommonWordsInCommitResponse extends BaseResponse{
 	
 	private Map<String,Integer> data;
 

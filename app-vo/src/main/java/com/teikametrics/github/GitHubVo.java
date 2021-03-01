@@ -1,4 +1,4 @@
-package com.teikametrics.externalintegration.github;
+package com.teikametrics.github;
 
 import com.teikametrics.common.BaseVo;
 

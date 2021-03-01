@@ -1,8 +1,8 @@
-package com.teikametrics.externalintegration.github;
+package com.teikametrics.events;
 
 import com.teikametrics.common.BaseVo;
 
-public class EcommerceAndAdvertisingCommonHourVo extends BaseVo{
+public class EventProcessingCommonHourVo extends BaseVo{
 	
 	private String hour;
 	private int numberOfCommit;

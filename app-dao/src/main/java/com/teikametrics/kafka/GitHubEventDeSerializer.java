@@ -1,9 +1,9 @@
-package com.teikametrics.kafka.common;
+package com.teikametrics.kafka;
 
 import org.apache.kafka.common.serialization.Deserializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.teikametrics.externalintegration.github.GitHubVo;
+import com.teikametrics.github.GitHubVo;
 
 public class GitHubEventDeSerializer implements Deserializer<GitHubVo>{
 

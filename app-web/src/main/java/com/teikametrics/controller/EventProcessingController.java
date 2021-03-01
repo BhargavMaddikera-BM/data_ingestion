@@ -1,4 +1,4 @@
-package com.teikametrics.controller.externalintegration;
+package com.teikametrics.controller;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,35 +20,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.teikametrics.EventProcessingService;
 import com.teikametrics.common.BaseController;
 import com.teikametrics.common.BaseResponse;
 import com.teikametrics.common.Constants;
-import com.teikametrics.externalintegration.EcommerceAndAdvertisingService;
-import com.teikametrics.externalintegration.github.EcommerceAndAdvertisingCommonHourVo;
-import com.teikametrics.externalintegration.github.GitHubVo;
-import com.teikametrics.response.externalintegration.EcommerceAndAdvertisingCommonHourResponse;
-import com.teikametrics.response.externalintegration.EcommerceAndAdvertisingCommonWordsInCommitResponse;
-import com.teikametrics.response.externalintegration.EcommerceAndAdvertisingConsumeResponse;
-import com.teikametrics.response.externalintegration.EcommerceAndAdvertisingPublishResponse;
+import com.teikametrics.events.EventProcessingCommonHourVo;
+import com.teikametrics.github.GitHubVo;
+import com.teikametrics.response.events.EventProcessingCommonHourResponse;
+import com.teikametrics.response.events.EventProcessingCommonWordsInCommitResponse;
+import com.teikametrics.response.events.EventProcessingConsumeResponse;
+import com.teikametrics.response.events.EventProcessingPublishResponse;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/data_ingestion/ecommerce_advertising")
-public class EcommerceAndAdvertisingController extends BaseController {
+@RequestMapping("/data_ingestion/events")
+public class EventProcessingController extends BaseController {
 
-	private Logger logger = Logger.getLogger(EcommerceAndAdvertisingController.class);
+	private Logger logger = Logger.getLogger(EventProcessingController.class);
 
 	@Autowired
-	EcommerceAndAdvertisingService ecommerceAndAdvertisingService;
+	EventProcessingService eventProcessingService;
 
-	@RequestMapping(value = "/v1/publish/events/{number}", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1/publish/{number}", method = RequestMethod.GET)
 	public ResponseEntity<BaseResponse> publish(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
 			@PathVariable String number) {
 		logger.info("Entry into method:publish");
-		BaseResponse response = new EcommerceAndAdvertisingPublishResponse();
+		BaseResponse response = new EventProcessingPublishResponse();
 		try {
-			List<GitHubVo> data = ecommerceAndAdvertisingService.publish(number);
-			((EcommerceAndAdvertisingPublishResponse) response).setData(data);
+			List<GitHubVo> data = eventProcessingService.publish(number);
+			((EventProcessingPublishResponse) response).setData(data);
 			response = constructResponse(response, Constants.SUCCESS, Constants.SUCCESS_ECOM_ADV_PUBLISH,
 					Constants.SUCCESS_ECOM_ADV_PUBLISH, Constants.SUCCESS_DURING_PUBLISH);
 			logger.info("Response Payload:" + generateRequestAndResponseLogPaylod(response));
@@ -64,14 +64,14 @@ public class EcommerceAndAdvertisingController extends BaseController {
 
 	}
 
-	@RequestMapping(value = "/v1/events", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1", method = RequestMethod.GET)
 	public ResponseEntity<BaseResponse> fetchAllEvents(HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse) {
 		logger.info("Entry into method:fetchAllEvents");
-		BaseResponse response = new EcommerceAndAdvertisingConsumeResponse();
+		BaseResponse response = new EventProcessingConsumeResponse();
 		try {
-			Map<String, GitHubVo> data = ecommerceAndAdvertisingService.fetchAllEvents();
-			((EcommerceAndAdvertisingConsumeResponse) response).setData(data);
+			Map<String, GitHubVo> data = eventProcessingService.fetchAllEvents();
+			((EventProcessingConsumeResponse) response).setData(data);
 			response = constructResponse(response, Constants.SUCCESS, Constants.SUCCESS_GIT_HUB_EVENTS_FETCH,
 					Constants.SUCCESS_GIT_HUB_EVENTS_FETCH, Constants.SUCCESS_DURING_GET);
 			logger.info("Response Payload:" + generateRequestAndResponseLogPaylod(response));
@@ -86,15 +86,15 @@ public class EcommerceAndAdvertisingController extends BaseController {
 		}
 	}
 
-	@RequestMapping(value = "/v1/events/{startpos}/{endpos}", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1/{startpos}/{endpos}", method = RequestMethod.GET)
 	public ResponseEntity<BaseResponse> fetchEventsByRange(HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse, @PathVariable String startpos, @PathVariable String endpos) {
 		logger.info("Entry into method:fetchEventsByRange");
-		BaseResponse response = new EcommerceAndAdvertisingConsumeResponse();
+		BaseResponse response = new EventProcessingConsumeResponse();
 		try {
-			Map<String, GitHubVo> data = ecommerceAndAdvertisingService.fetchEventsByRange(Integer.parseInt(startpos),
+			Map<String, GitHubVo> data = eventProcessingService.fetchEventsByRange(Integer.parseInt(startpos),
 					Integer.parseInt(endpos));
-			((EcommerceAndAdvertisingConsumeResponse) response).setData(data);
+			((EventProcessingConsumeResponse) response).setData(data);
 			response = constructResponse(response, Constants.SUCCESS, Constants.SUCCESS_GIT_HUB_EVENTS_FETCH,
 					Constants.SUCCESS_GIT_HUB_EVENTS_FETCH, Constants.SUCCESS_DURING_GET);
 			logger.info("Response Payload:" + generateRequestAndResponseLogPaylod(response));
@@ -111,31 +111,31 @@ public class EcommerceAndAdvertisingController extends BaseController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(value = "/v1/events/commit/common_hour", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1/commit/common_hour", method = RequestMethod.GET)
 	public ResponseEntity<BaseResponse> fetchCommitedEventsByCommonHourOfDay(HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse) {
 		logger.info("Entry into method:fetchCommitedEventsByCommonHourOfDay");
-		BaseResponse response = new EcommerceAndAdvertisingCommonHourResponse();
+		BaseResponse response = new EventProcessingCommonHourResponse();
 		try {
-			Map<String,Integer> data=ecommerceAndAdvertisingService.fetchCommitedEventsByCommonHourOfDay();
-			List<EcommerceAndAdvertisingCommonHourVo>finalData=new ArrayList<EcommerceAndAdvertisingCommonHourVo>();
+			Map<String,Integer> data=eventProcessingService.fetchCommitedEventsByCommonHourOfDay();
+			List<EventProcessingCommonHourVo>finalData=new ArrayList<EventProcessingCommonHourVo>();
 			int i=0;
 			int value=0;
 			Iterator it=data.entrySet().iterator();
 			while(it.hasNext()){
 				Map.Entry<String,Integer> entry=(Map.Entry<String,Integer>)it.next();
 				if(i==0 || entry.getValue()==value){
-					EcommerceAndAdvertisingCommonHourVo ecommerceAndAdvertisingCommonHourVo=new EcommerceAndAdvertisingCommonHourVo();
-					ecommerceAndAdvertisingCommonHourVo.setHour(entry.getKey());
-					ecommerceAndAdvertisingCommonHourVo.setNumberOfCommit(entry.getValue());
+					EventProcessingCommonHourVo eventProcessingCommonHourVo=new EventProcessingCommonHourVo();
+					eventProcessingCommonHourVo.setHour(entry.getKey());
+					eventProcessingCommonHourVo.setNumberOfCommit(entry.getValue());
 					if(i==0){
-						value=ecommerceAndAdvertisingCommonHourVo.getNumberOfCommit();
+						value=eventProcessingCommonHourVo.getNumberOfCommit();
 					}
-					finalData.add(ecommerceAndAdvertisingCommonHourVo);
+					finalData.add(eventProcessingCommonHourVo);
 				}
 				++i;
 			}			
-			((EcommerceAndAdvertisingCommonHourResponse) response).setData(finalData);
+			((EventProcessingCommonHourResponse) response).setData(finalData);
 			response = constructResponse(response, Constants.SUCCESS, Constants.SUCCESS_GIT_HUB_EVENTS_FETCH,
 					Constants.SUCCESS_GIT_HUB_EVENTS_FETCH, Constants.SUCCESS_DURING_GET);
 			logger.info("Response Payload:" + generateRequestAndResponseLogPaylod(response));
@@ -152,13 +152,13 @@ public class EcommerceAndAdvertisingController extends BaseController {
 	}
 
 
-	@RequestMapping(value = "/v1/events/commit/common_word", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1/commit/common_word", method = RequestMethod.GET)
 	public ResponseEntity<BaseResponse> fetchCommonWordsInCommitMessage(HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse) {
 		logger.info("Entry into method:fetchCommonWordsInCommitMessage");
-		BaseResponse response = new EcommerceAndAdvertisingCommonWordsInCommitResponse();
+		BaseResponse response = new EventProcessingCommonWordsInCommitResponse();
 		try {
-			Map<String,Integer> data=ecommerceAndAdvertisingService.fetchCommonWordsInCommitMessage();
+			Map<String,Integer> data=eventProcessingService.fetchCommonWordsInCommitMessage();
 			Map<String,Integer> finalData=new TreeMap<String,Integer>();
 			Iterator<Entry<String, Integer>> it=data.entrySet().iterator();
 			int i=0;
@@ -170,7 +170,7 @@ public class EcommerceAndAdvertisingController extends BaseController {
 				finalData.put(entry.getKey(), entry.getValue());
 				++i;
 			}
-			((EcommerceAndAdvertisingCommonWordsInCommitResponse) response).setData(finalData);
+			((EventProcessingCommonWordsInCommitResponse) response).setData(finalData);
 			response = constructResponse(response, Constants.SUCCESS, Constants.SUCCESS_GIT_HUB_EVENTS_FETCH,
 					Constants.SUCCESS_GIT_HUB_EVENTS_FETCH, Constants.SUCCESS_DURING_GET);
 			logger.info("Response Payload:" + generateRequestAndResponseLogPaylod(response));

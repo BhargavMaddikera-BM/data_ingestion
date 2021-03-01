@@ -1,9 +1,9 @@
-package com.teikametrics.response.externalintegration;
+package com.teikametrics.response.github;
 
 import java.util.List;
 
 import com.teikametrics.common.BaseResponse;
-import com.teikametrics.externalintegration.github.GitHubVo;
+import com.teikametrics.github.GitHubVo;
 
 public class GitHubEventsResponse extends BaseResponse{
 	

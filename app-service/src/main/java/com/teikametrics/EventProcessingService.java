@@ -1,4 +1,4 @@
-package com.teikametrics.externalintegration;
+package com.teikametrics;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,19 +17,18 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.teikametrics.ApplicationException;
 import com.teikametrics.cache.GitHubCacheImpl;
 import com.teikametrics.common.BaseService;
-import com.teikametrics.externalintegration.github.GitHubVo;
 import com.teikametrics.github.GitHubEvents;
-import com.teikametrics.kafka.externalintegration.EcommerceAndAdvertisingDao;
+import com.teikametrics.github.GitHubVo;
+import com.teikametrics.kafka.KafkaEventProcessingDao;
 
 
 @Service
-public class EcommerceAndAdvertisingService extends BaseService{
+public class EventProcessingService extends BaseService{
 
 	@Autowired
-	EcommerceAndAdvertisingDao ecommerceAndAdvertisingDao;
+	KafkaEventProcessingDao kafkaEventProcessingDao;
 
 
 	public List<GitHubVo> publish(String number)throws ApplicationException{
@@ -41,7 +40,7 @@ public class EcommerceAndAdvertisingService extends BaseService{
 			data = objectMapper.readValue(events, TypeFactory.defaultInstance().constructCollectionType(List.class, GitHubVo.class));
 			if(data!=null){
 				for(int i=0;i<data.size();i++){
-					ecommerceAndAdvertisingDao.publish(data.get(i));
+					kafkaEventProcessingDao.publish(data.get(i));
 				}
 			}
 		} catch (Exception e) {

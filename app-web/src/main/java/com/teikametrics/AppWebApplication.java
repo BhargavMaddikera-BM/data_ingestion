@@ -13,7 +13,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.teikametrics.externalintegration.GitHubEventSubscriberThread;
+import com.teikametrics.util.GitHubEventSubscriberThread;
 
 @SpringBootApplication
 @EnableCaching

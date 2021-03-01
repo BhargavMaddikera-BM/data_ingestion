@@ -1,4 +1,4 @@
-package com.teikametrics.kafka.common;
+package com.teikametrics.kafka;
 
 import java.io.FileReader;
 import java.util.Collections;
@@ -8,7 +8,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 
-import com.teikametrics.externalintegration.github.GitHubVo;
+import com.teikametrics.github.GitHubVo;
 
 public class KafkaConfig {
 	
@@ -58,7 +58,7 @@ public class KafkaConfig {
 		props.put("linger.ms", 1);
 		props.put("buffer.memory", 33554432);
 		props.put("key.serializer","org.apache.kafka.common.serialization.StringSerializer");
-		props.put("value.serializer","com.teikametrics.kafka.common.GitHubEventSerializer");
+		props.put("value.serializer","com.teikametrics.kafka.GitHubEventSerializer");
 		Producer<String, GitHubVo> producer = new KafkaProducer<String, GitHubVo>(props);
 		return producer;
 
@@ -72,7 +72,7 @@ public class KafkaConfig {
 		props.put("auto.commit.interval.ms", "1000");
 		props.put("session.timeout.ms", "30000");
 		props.put("key.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
-		props.put("value.deserializer", "com.teikametrics.kafka.common.GitHubEventDeSerializer");
+		props.put("value.deserializer", "com.teikametrics.kafka.GitHubEventDeSerializer");
 		KafkaConsumer<String, GitHubVo> consumer = new KafkaConsumer<String, GitHubVo>(props);
         consumer.subscribe(Collections.singletonList(githubEventsTopic));
 		return consumer;

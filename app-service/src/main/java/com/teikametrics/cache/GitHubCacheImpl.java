@@ -9,8 +9,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.teikametrics.ApplicationException;
 import com.teikametrics.DateHelper;
-import com.teikametrics.externalintegration.github.GitHubPayloadCommitsVo;
-import com.teikametrics.externalintegration.github.GitHubVo;
+import com.teikametrics.github.GitHubPayloadCommitsVo;
+import com.teikametrics.github.GitHubVo;
 
 
 
