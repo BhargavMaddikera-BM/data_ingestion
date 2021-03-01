@@ -1,6 +1,6 @@
 This is an Usability Guide of how to use the Data Ingestion System
 
-a) Prerequisites - The following are required before the Application is launched:
+a) **Prerequisites - The following are required before the Application is launched:**
 
 1) Java 8(minimum)
 
@@ -18,7 +18,7 @@ In the event app_config.properties is not there, they would default to github_ev
 6) Install Maven 3.6.3
 
 
-b) Steps to Launch the Application:
+b) **Steps to Launch the Application:**
 
 1) Take the code from GIT - https://github.com/BhargavMaddikera-BM/data_ingestion.git master branch
 
@@ -29,7 +29,7 @@ b) Steps to Launch the Application:
 4) execute java -jar app-web-0.0.1-SNAPSHOT.jar com.teikametrics.AppWebApplication
 
 
-c) Projects/Components Structure:
+c) **Projects/Components Structure:**
 
 1) app-web: 
 
@@ -61,7 +61,7 @@ c) Projects/Components Structure:
 	     happens in this layer.
 
 
-d) Others:
+d) **Others:**
 
 1) No particular repository is considered for now.
 
