@@ -29,7 +29,7 @@ b) Steps to Launch the Application:
 4) execute java -jar app-web-0.0.1-SNAPSHOT.jar com.teikametrics.AppWebApplication
 
 
-c) Projects/Components:
+c) Projects/Components Structure:
 
 1) app-web: 
 
