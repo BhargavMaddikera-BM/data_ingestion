@@ -24,7 +24,7 @@ b) Steps to Launch the Application:
 c) Projects/Components:
 
 1) app-web: It has all the Controllers, request,response,filter. This is basically the web component
-2) app-service: It has all the Business Tier code and logic. This is also the place where Kafka Messages are consumed by a Custom Defined Thread
+2) app-service: It has all the Business Tier code and logic. This is also the place where Kafka Messages are consumed by a Custom Defined Thread. Also, it holds the Cache Service. for now, static variable is used as Cache. In real time scenarios, will be using Hazelcast-in memory data grid, the implementation of which will then go inside app-dao.
 3) app-dao: This has all the Database related code. Though Kafka is not meant for Storage unlike SQL and NoSQL Databases, here Kafka is treated as a Data Store as Data resides in Kafka Partitions until its consumed. Kafka Producer is in app-dao component.
 4) app-vo: This is the place that has all the Value Objects. Any interaction between the layers has to be via Custom Defined Value Objects
 5) app-ulity: It has Custom Defined Exceptions both Checked and Runtime as well as Date utilities.
