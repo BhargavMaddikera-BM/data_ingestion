@@ -10,6 +10,14 @@ public class GitHubVo extends BaseVo{
 	private GitHubRepoVo repo;
 	private GitHubPayloadVo payload;
 	private String created_at;
+	private GitHubOrgVo org;
+	
+	public GitHubOrgVo getOrg() {
+		return org;
+	}
+	public void setOrg(GitHubOrgVo org) {
+		this.org = org;
+	}
 	public String getId() {
 		return id;
 	}

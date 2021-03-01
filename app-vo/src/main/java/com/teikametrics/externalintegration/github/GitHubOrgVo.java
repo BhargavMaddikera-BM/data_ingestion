@@ -1,10 +1,9 @@
 package com.teikametrics.externalintegration.github;
 
-public class GitHubActorVo {
-
+public class GitHubOrgVo {
+	
 	private String id;
 	private String login;
-	private String display_login;
 	private String gravatar_id;
 	private String url;
 	private String avatar_url;
@@ -19,12 +18,6 @@ public class GitHubActorVo {
 	}
 	public void setLogin(String login) {
 		this.login = login;
-	}
-	public String getDisplay_login() {
-		return display_login;
-	}
-	public void setDisplay_login(String display_login) {
-		this.display_login = display_login;
 	}
 	public String getGravatar_id() {
 		return gravatar_id;
@@ -45,4 +38,5 @@ public class GitHubActorVo {
 		this.avatar_url = avatar_url;
 	}
 	
+
 }
