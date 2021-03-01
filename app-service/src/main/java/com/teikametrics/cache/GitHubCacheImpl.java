@@ -8,16 +8,17 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.teikametrics.ApplicationException;
+import com.teikametrics.externalintegration.github.GitHubPayloadCommitsVo;
 import com.teikametrics.externalintegration.github.GitHubVo;
 
 
 
 public class GitHubCacheImpl{
-	
+
 	private static GitHubCacheImpl cacheImpl;
-	
+
 	private GitHubCacheImpl(){
-		
+
 	}
 
 	public static GitHubCacheImpl getInstance(){
@@ -26,22 +27,37 @@ public class GitHubCacheImpl{
 		}
 		return cacheImpl;
 	}
-	
+
 	private Map<String,GitHubVo> gitHubEventMap=new ConcurrentHashMap<String,GitHubVo>();	
 	private Map<String,List<String>> commonHourOfDayMap=new ConcurrentHashMap<String,List<String>>();
+	private Map<String,List<String>>commitMessageMap=new ConcurrentHashMap<String,List<String>>();
 
 	public void addGitHubEvent(String id, GitHubVo data )throws ApplicationException{
 		String currentHour=getCurrentHour();
 		if(commonHourOfDayMap.containsKey(currentHour)){
 			List<String>offSetIdList=commonHourOfDayMap.get(currentHour);
 			offSetIdList.add(id);
-			
+
 		}else{
 			List<String>offSetIdList=new ArrayList<String>();
 			offSetIdList.add(id);
 			commonHourOfDayMap.put(currentHour, offSetIdList);
 		}
 		gitHubEventMap.put(id, data);
+		if(data.getPayload()!=null && data.getPayload().getCommits()!=null){
+			if(data.getPayload().getCommits().size()>0){
+				List<String> message=new ArrayList<String>();
+				for(int i=0;i<data.getPayload().getCommits().size();i++){
+					GitHubPayloadCommitsVo gitHubPayloadCommitsVo=data.getPayload().getCommits().get(i);
+					message.add(gitHubPayloadCommitsVo.getMessage());
+				}			
+				commitMessageMap.put(id, message);
+			}
+		}
+	}
+
+	public Map<String, List<String>> getCommitMessageMap() {
+		return commitMessageMap;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -57,8 +73,8 @@ public class GitHubCacheImpl{
 	}
 
 
-	
-	
+
+
 	public Map<String, List<String>> getCommonHourOfDayMap() {
 		return commonHourOfDayMap;
 	}
@@ -97,12 +113,12 @@ public class GitHubCacheImpl{
 		}
 		return null;
 	}
-	
-	
+
+
 	public Map<String,GitHubVo>  getAllEvents()throws ApplicationException{
 		return gitHubEventMap;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public Map<String,GitHubVo>  getAllEventsByRange(int startpos, int endpos)throws ApplicationException{
 		Iterator it=gitHubEventMap.entrySet().iterator();
@@ -111,7 +127,7 @@ public class GitHubCacheImpl{
 		if(gitHubEventMap.size()<startpos){
 			throw new ApplicationException("Total Events is less than Start Position");
 		}
-		
+
 		if(gitHubEventMap.size()<endpos){
 			throw new ApplicationException("Total Events is less than End Position");
 		}		
