@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,11 +54,11 @@ public class EcommerceAndAdvertisingService extends BaseService{
 
 
 	public Map<String,GitHubVo> fetchAllEvents()throws ApplicationException{
-		return GitHubCacheImpl.getInstance().getAllEvents();
+		return GitHubCacheImpl.getInstance().getAllGitHubEvents();
 	}
 
 	public Map<String,GitHubVo> fetchEventsByRange(int startpos, int endpos)throws ApplicationException{
-		return GitHubCacheImpl.getInstance().getAllEventsByRange(startpos,endpos);
+		return GitHubCacheImpl.getInstance().getAllGitHubEventsByRange(startpos,endpos);
 	}
 
 
@@ -76,6 +77,36 @@ public class EcommerceAndAdvertisingService extends BaseService{
 		data_lc.clear();
 		return finalMap;
 	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+	public Map<String,Integer> fetchCommonWordsInCommitMessage()throws ApplicationException{
+		Map<String, List<String>>data= GitHubCacheImpl.getInstance().getCommitMessageMap();
+		Map<String,Integer>data_lc=new HashMap<String,Integer>();
+		Iterator it=data.entrySet().iterator();
+		while(it.hasNext()){
+			
+			Map.Entry entry=(Map.Entry)it.next();
+			String key=(String) entry.getKey();
+			List<String>value=(List<String>) entry.getValue();
+			for(int i=0;i<value.size();i++){
+				StringTokenizer strTokenizer=new StringTokenizer(value.get(i));
+				while(strTokenizer.hasMoreTokens()){
+					String token=strTokenizer.nextToken();
+					if(data_lc.containsKey(token)){
+						int val=data_lc.get(token);
+						++val;
+						data_lc.put(token, val);
+					}else{
+						data_lc.put(token, 1);
+					}
+				}
+			}
+		}		
+		Map<String, Integer> finalMap=sortByComparator(data_lc,false);
+		data_lc.clear();
+		return finalMap;
+	}
+
 
 
 	private Map<String, Integer> sortByComparator(Map<String, Integer> unsortMap, final boolean order)

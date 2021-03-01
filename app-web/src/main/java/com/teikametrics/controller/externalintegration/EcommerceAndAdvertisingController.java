@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +27,7 @@ import com.teikametrics.externalintegration.EcommerceAndAdvertisingService;
 import com.teikametrics.externalintegration.github.EcommerceAndAdvertisingCommonHourVo;
 import com.teikametrics.externalintegration.github.GitHubVo;
 import com.teikametrics.response.externalintegration.EcommerceAndAdvertisingCommonHourResponse;
+import com.teikametrics.response.externalintegration.EcommerceAndAdvertisingCommonWordsInCommitResponse;
 import com.teikametrics.response.externalintegration.EcommerceAndAdvertisingConsumeResponse;
 import com.teikametrics.response.externalintegration.EcommerceAndAdvertisingPublishResponse;
 
@@ -147,5 +150,41 @@ public class EcommerceAndAdvertisingController extends BaseController {
 			return new ResponseEntity<BaseResponse>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+
+	@RequestMapping(value = "/v1/events/commit/common_word", method = RequestMethod.GET)
+	public ResponseEntity<BaseResponse> fetchCommonWordsInCommitMessage(HttpServletRequest httpRequest,
+			HttpServletResponse httpResponse) {
+		logger.info("Entry into method:fetchCommonWordsInCommitMessage");
+		BaseResponse response = new EcommerceAndAdvertisingCommonWordsInCommitResponse();
+		try {
+			Map<String,Integer> data=ecommerceAndAdvertisingService.fetchCommonWordsInCommitMessage();
+			Map<String,Integer> finalData=new TreeMap<String,Integer>();
+			Iterator<Entry<String, Integer>> it=data.entrySet().iterator();
+			int i=0;
+			while(it.hasNext()){
+				if(i==5){
+					break;
+				}
+				Map.Entry<String, Integer> entry=(Map.Entry<String, Integer>)it.next();
+				finalData.put(entry.getKey(), entry.getValue());
+				++i;
+			}
+			((EcommerceAndAdvertisingCommonWordsInCommitResponse) response).setData(finalData);
+			response = constructResponse(response, Constants.SUCCESS, Constants.SUCCESS_GIT_HUB_EVENTS_FETCH,
+					Constants.SUCCESS_GIT_HUB_EVENTS_FETCH, Constants.SUCCESS_DURING_GET);
+			logger.info("Response Payload:" + generateRequestAndResponseLogPaylod(response));
+			return new ResponseEntity<BaseResponse>(response, HttpStatus.OK);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+
+			response = constructResponse(response, Constants.FAILURE, Constants.FAILURE_GIT_HUB_EVENTS_FETCH,
+					e.getMessage(), Constants.FAILURE_DURING_GET);
+			logger.error("Error Payload:" + generateRequestAndResponseLogPaylod(response));
+			return new ResponseEntity<BaseResponse>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 
 }

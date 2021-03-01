@@ -1,13 +1,14 @@
 package com.teikametrics.cache;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.teikametrics.ApplicationException;
+import com.teikametrics.DateHelper;
 import com.teikametrics.externalintegration.github.GitHubPayloadCommitsVo;
 import com.teikametrics.externalintegration.github.GitHubVo;
 
@@ -31,9 +32,11 @@ public class GitHubCacheImpl{
 	private Map<String,GitHubVo> gitHubEventMap=new ConcurrentHashMap<String,GitHubVo>();	
 	private Map<String,List<String>> commonHourOfDayMap=new ConcurrentHashMap<String,List<String>>();
 	private Map<String,List<String>>commitMessageMap=new ConcurrentHashMap<String,List<String>>();
+	private Map<String,String>commonHourOfDayKeyRemovalMap=new ConcurrentHashMap<String,String>();
+
 
 	public void addGitHubEvent(String id, GitHubVo data )throws ApplicationException{
-		String currentHour=getCurrentHour();
+		String currentHour=DateHelper.getInstance().getCurrentDateTillHour();
 		if(commonHourOfDayMap.containsKey(currentHour)){
 			List<String>offSetIdList=commonHourOfDayMap.get(currentHour);
 			offSetIdList.add(id);
@@ -44,6 +47,7 @@ public class GitHubCacheImpl{
 			commonHourOfDayMap.put(currentHour, offSetIdList);
 		}
 		gitHubEventMap.put(id, data);
+		commonHourOfDayKeyRemovalMap.put(id, currentHour);
 		if(data.getPayload()!=null && data.getPayload().getCommits()!=null){
 			if(data.getPayload().getCommits().size()>0){
 				List<String> message=new ArrayList<String>();
@@ -56,55 +60,39 @@ public class GitHubCacheImpl{
 		}
 	}
 
-	public Map<String, List<String>> getCommitMessageMap() {
-		return commitMessageMap;
-	}
-
-	@SuppressWarnings("deprecation")
-	private String getCurrentHour() {
-		// TODO Auto-generated method stub
-		Date date=new Date(System.currentTimeMillis());
-		int month=date.getMonth()+1;
-		int day=date.getDate();
-		int year=date.getYear()+1900;
-		int hours=date.getHours();
-		String finalDate=""+day+"-"+month+"-"+year+"-"+hours+":00";
-		return finalDate;		
-	}
-
-
-
-
-	public Map<String, List<String>> getCommonHourOfDayMap() {
-		return commonHourOfDayMap;
-	}
-
-	public void addGitHubEvents(List<GitHubVo> data )throws ApplicationException{
-		for(int i=0;i<data.size();i++)
-			gitHubEventMap.put(data.get(i).getId(), data.get(i));
-	}
-
 	public void removeGitHubEvent(String id)throws ApplicationException{
+		if(commitMessageMap.containsKey(id)){
+			commitMessageMap.remove(id);
+		}		
+		if(commonHourOfDayKeyRemovalMap.containsKey(id)){
+			String value=commonHourOfDayKeyRemovalMap.get(id);
+			List<String>commonHourIdList=commonHourOfDayMap.get(value);
+			if(commonHourIdList!=null && commonHourIdList.size()>0){
+				String valueTobeRemoved=null;
+				for(int i=0;i<commonHourIdList.size();i++){
+					String offSetId=commonHourIdList.get(i);
+					if(offSetId.equals(id)){
+						valueTobeRemoved=id;
+						if(valueTobeRemoved!=null){
+							commonHourIdList.remove(valueTobeRemoved);
+							commonHourOfDayMap.put(value, commonHourIdList);
+							break;
+
+						}
+					}
+				}
+			}
+			commonHourOfDayKeyRemovalMap.remove(id);
+		}
+		
 		if(gitHubEventMap.containsKey(id)){
 			gitHubEventMap.remove(id);
 		}
-	}
 
-	public void removeGitHubEvents(List<String> idList)throws ApplicationException{
-		for(int i=0;i<idList.size();i++){
-			if(gitHubEventMap.containsKey(idList.get(i))){
-				gitHubEventMap.remove(idList.get(i));
-			}
-		}		
 	}
 
 	public void updateGitHubEvent(String id, GitHubVo data)throws ApplicationException{
 		gitHubEventMap.put(id, data);
-	}
-
-	public void updateGitHubEvents(List<GitHubVo> data )throws ApplicationException{
-		for(int i=0;i<data.size();i++)
-			gitHubEventMap.put(data.get(i).getId(), data.get(i));
 	}
 
 	public GitHubVo getGitHubEvent(String id)throws ApplicationException{
@@ -115,12 +103,12 @@ public class GitHubCacheImpl{
 	}
 
 
-	public Map<String,GitHubVo>  getAllEvents()throws ApplicationException{
+	public Map<String,GitHubVo>  getAllGitHubEvents()throws ApplicationException{
 		return gitHubEventMap;
 	}
 
 	@SuppressWarnings("rawtypes")
-	public Map<String,GitHubVo>  getAllEventsByRange(int startpos, int endpos)throws ApplicationException{
+	public Map<String,GitHubVo>  getAllGitHubEventsByRange(int startpos, int endpos)throws ApplicationException{
 		Iterator it=gitHubEventMap.entrySet().iterator();
 		Map<String,GitHubVo> gitHubEventMap_lc=new ConcurrentHashMap<String,GitHubVo>();
 		int i=0;
@@ -146,4 +134,15 @@ public class GitHubCacheImpl{
 		}
 		return gitHubEventMap_lc;
 	}
+
+	public Map<String, List<String>> getCommitMessageMap() {
+		return Collections.unmodifiableMap(commitMessageMap);
+	}
+	public Map<String, List<String>> getCommonHourOfDayMap() {
+		return Collections.unmodifiableMap(commonHourOfDayMap);
+	}
+
+
+
+
 }

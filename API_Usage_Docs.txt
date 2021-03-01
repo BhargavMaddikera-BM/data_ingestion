@@ -417,3 +417,25 @@ Response:
         }
     ]
 }
+
+
+Description: An API that fetches 5 most commonly used words in the commit messages. Its returns the number of occurences as well.
+URL: http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/commit/common_word
+Method:GET
+Example:http://localhost:8085/data_ingestion/ecommerce_advertising/v1/events/commit/common_word
+Request:None
+Response:
+
+{
+    "responseCode": "S-10000",
+    "responseDescription": "GitHub Events Fetched Successfully",
+    "responseMessage": "GitHub Events Fetched Successfully",
+    "responseStatus": "Success",
+    "data": {
+        "#add": 2,
+        "Automation": 2,
+        "Generative": 1,
+        "Pre-Training": 1,
+        "goodtest": 1
+    }
+}
