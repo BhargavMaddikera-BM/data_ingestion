@@ -2,10 +2,10 @@ package com.teikametrics.controller;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -159,7 +159,7 @@ public class EventProcessingController extends BaseController {
 		BaseResponse response = new EventProcessingCommonWordsInCommitResponse();
 		try {
 			Map<String,Integer> data=eventProcessingService.fetchCommonWordsInCommitMessage();
-			Map<String,Integer> finalData=new TreeMap<String,Integer>();
+			Map<String,Integer> finalData=new LinkedHashMap<String,Integer>();
 			Iterator<Entry<String, Integer>> it=data.entrySet().iterator();
 			int i=0;
 			while(it.hasNext()){
@@ -167,7 +167,9 @@ public class EventProcessingController extends BaseController {
 					break;
 				}
 				Map.Entry<String, Integer> entry=(Map.Entry<String, Integer>)it.next();
-				finalData.put(entry.getKey(), entry.getValue());
+				String key=entry.getKey();
+				int value=entry.getValue();				
+				finalData.put(key,value);
 				++i;
 			}
 			((EventProcessingCommonWordsInCommitResponse) response).setData(finalData);
