@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,7 +81,7 @@ public class EventProcessingService extends BaseService{
 	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 	public Map<String,Integer> fetchCommonWordsInCommitMessage()throws ApplicationException{
 		Map<String, List<String>>data= GitHubCacheImpl.getInstance().getCommitMessageMap();
-		Map<String,Integer>data_lc=new HashMap<String,Integer>();
+		Map<String,Integer>data_lc=new TreeMap<String,Integer>();
 		Iterator it=data.entrySet().iterator();
 		while(it.hasNext()){
 			

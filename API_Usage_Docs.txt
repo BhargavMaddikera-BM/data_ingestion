@@ -432,10 +432,10 @@ Response:
     "responseMessage": "GitHub Events Fetched Successfully",
     "responseStatus": "Success",
     "data": {
-        "#add": 2,
-        "Automation": 2,
-        "Generative": 1,
-        "Pre-Training": 1,
-        "goodtest": 1
+        "Merge": 4,
+        "from": 3,
+        "pull": 3,
+        "request": 3,
+        "2021-03-01": 2
     }
 }
