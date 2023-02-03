@@ -66,3 +66,4 @@ d) **Others:**
 1) No particular/specific repository is considered for now w.r.t fetching events.
 
 2) https://api.github.com/events?per_page= is invoked that fetches events from all repositories.
+
