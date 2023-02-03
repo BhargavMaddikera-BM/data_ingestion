@@ -1,3 +1,5 @@
+𝐏𝐥𝐞𝐚𝐬𝐞 𝐧𝐨𝐭𝐞, 𝐭𝐡𝐢𝐬 𝐢𝐬 𝐩𝐮𝐫𝐞𝐥𝐲 𝐦𝐲 𝐜𝐨𝐝𝐞. 𝐓𝐞𝐢𝐤𝐚𝐦𝐞𝐭𝐫𝐢𝐜𝐬 𝐡𝐚𝐝 𝐚 𝐜𝐨𝐝𝐢𝐧𝐠 𝐚𝐬𝐬𝐢𝐠𝐧𝐦𝐞𝐧𝐭 𝐫𝐨𝐮𝐧𝐝. 𝐢 𝐡𝐚𝐝 𝐭𝐨 𝐛𝐮𝐢𝐥𝐝 𝐭𝐡𝐢𝐬 𝐚𝐬 𝐩𝐚𝐫𝐭 𝐨𝐟 𝐢𝐧𝐭𝐞𝐫𝐯𝐢𝐞𝐰 𝐩𝐫𝐨𝐜𝐞𝐬𝐬 𝐢𝐧 𝐞𝐚𝐫𝐥𝐲 𝟐𝟎𝟐𝟏
+
 This is an Usability Guide of how to use the Data Ingestion System
 
 a) **Prerequisites - The following are required before the Application is launched:**
@@ -66,6 +68,3 @@ d) **Others:**
 1) No particular/specific repository is considered for now w.r.t fetching events.
 
 2) https://api.github.com/events?per_page= is invoked that fetches events from all repositories.
-
-𝐏𝐥𝐞𝐚𝐬𝐞 𝐧𝐨𝐭𝐞, 𝐭𝐡𝐢𝐬 𝐢𝐬 𝐩𝐮𝐫𝐞𝐥𝐲 𝐦𝐲 𝐜𝐨𝐝𝐞. 𝐓𝐞𝐢𝐤𝐚𝐦𝐞𝐭𝐫𝐢𝐜𝐬 𝐡𝐚𝐝 𝐚 𝐜𝐨𝐝𝐢𝐧𝐠 𝐚𝐬𝐬𝐢𝐠𝐧𝐦𝐞𝐧𝐭 𝐫𝐨𝐮𝐧𝐝. 𝐢 𝐡𝐚𝐝 𝐭𝐨 𝐛𝐮𝐢𝐥𝐝 𝐭𝐡𝐢𝐬 𝐚𝐬 𝐩𝐚𝐫𝐭 𝐨𝐟 𝐢𝐧𝐭𝐞𝐫𝐯𝐢𝐞𝐰 𝐩𝐫𝐨𝐜𝐞𝐬𝐬 𝐢𝐧 𝐞𝐚𝐫𝐥𝐲 𝟐𝟎𝟐𝟏
-
